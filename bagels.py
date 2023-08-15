@@ -43,7 +43,7 @@ clues would be Fermi Pico.'''.format(NUM_DIGITS))
             print(clues)
             numGuesses += 1
 
-            if guess == secretNumber:
+            if guess == secretNum:
                 break  # They're correct, so break out of this loop.
             if numGuesses > MAX_GUESSES:
                 print('You ran out of guesses.')
