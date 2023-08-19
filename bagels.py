@@ -32,7 +32,7 @@ clues would be Fermi Pico.'''.format(NUM_DIGITS))
         print(' You have {} guesses to get it.'.format(MAX_GUESSES))
 
         numGuesses = 1
-        while numGuesses < MAX_GUESSES:
+        while numGuesses <= MAX_GUESSES:
             guess = ''
             # Keep looping until they enter a valid guess:
             while len(guess) != NUM_DIGITS or not guess.isdecimal():
