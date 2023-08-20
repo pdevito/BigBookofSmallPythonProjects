@@ -8,17 +8,13 @@ Tags: large, game, card game"""
 import random, sys
 
 # Set up the constants:
-HEARTS   = chr(9829) # Character 9829 is ''.
-DIAMONDS = chr(9830) # Character 9830 is ''.
-SPADES   = chr(9824) # Character 9824 is ''.
-CLUBS    = chr(9827) # Character 9827 is ''.
+HEARTS   = chr(9829) # Character 9829 is '♥'.
+DIAMONDS = chr(9830) # Character 9830 is '♦'.
+SPADES   = chr(9824) # Character 9824 is '♠'.
+CLUBS    = chr(9827) # Character 9827 is '♣'.
 # (A list of chr codes is at https://inventwithpython.com/charactermap)
 BACKSIDE = 'backside'
-
-
-def main():
-    print('''Blackjack, by Al Sweigart al@inventwithpython.com
-          
+RULES = '''\n
     Rules:
       Try to get as close to 21 without going over.
       Kinds, Queens, and Jacks are worth 10 points.
@@ -26,12 +22,20 @@ def main():
       Cards 2 through 10 are worth their face value.
       (H)it to take another card.
       (S)tand to stop taking cards.
-      On your firtst play, you can (D)ouble down to increase your bet
-      but must hit exactly one more time before standing.
+      On your first play, you can (D)ouble down to increase your bet
+        but must hit exactly one more time before standing.
+      In case of doubles, you can s(P)lit the cards into two hands,
+        and the new hand will have the same bet value as the original
+        hand.
       In case of a tie, the bet is returned to the player.
-      The dealer stops hitting at 17.''')
+      The dealer stops hitting at 17.'''
+
+def main():
+    print('''Blackjack, by Al Sweigart al@inventwithpython.com''' + RULES)
     
     money = 5000
+    numOfDecks = 1
+
     while True:  # Main game loop.
         # Check if the player has run out of money:
         if money <= 0:
@@ -46,8 +50,8 @@ def main():
 
         # Give the dealer and player two cards from the deck each:
         deck = getDeck()
-        dealerHand = [deck.pop(), deck.pop()]
-        playerHand = [deck.pop(), deck.pop()]
+        dealerHand = getHand(deck, 'dealer') #[deck.pop(), deck.pop()]
+        playerHand = getHand(deck, 'player') #[deck.pop(), deck.pop()]
         
         # Handle player actions:
         print('Bet:', bet)
@@ -147,6 +151,12 @@ def getDeck():
             deck.append((rank, suit))  # Add the face and ace Cards.
     random.shuffle(deck)
     return deck
+
+
+def getHand(deck, person):
+    """Return an array of hands for a given person."""
+    hand = [deck.pop(), deck.pop()]
+    return hand
 
 
 def displayHands(playerHand, dealerHand, showDealerHand):
